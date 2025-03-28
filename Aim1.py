@@ -36,92 +36,20 @@ def readTSV(tsvFileName):
 
 
 # csv files
-proteomeCSV = "/home/eelias13/KinaseModulation/ProteomeFiles/proteome.csv"
+proteomeCSV = "/Users/elizabethelias/StJude/gpcrphosphorylation/datafiles/proteome.csv"
+pssmCSV = "/Users/elizabethelias/StJude/gpcrphosphorylation/datafiles/ser_thr_pssm.csv"
+tyrPSSMCSV = '/Users/elizabethelias/StJude/gpcrphosphorylation/datafiles/tyr_pssm.csv'
+final_phosphositesCSV = "/Users/elizabethelias/StJude/gpcrphosphorylation/datafiles/final_mapped_phosphosites.csv"
 
-pssmCSV = "/home/eelias13/KinaseModulation/pssmFiles/pssm.csv"
-tyrPSSMCSV = '/home/eelias13/KinaseModulation/pssmFiles/tyrosine_pssm.csv'
-
-final_phosphositesCSV = "C:/Users/eelias13/Desktop/KinaseModulation/Mapped_Phosphosites/final_mapped_phosphosites.csv"
-all_psites_mapped_ensemblCSV = "C:/Users/eelias13/Desktop/KinaseModulation/Mapped_Phosphosites/all_phosphosites_mapped_to_ensembl_ids.csv"
-
-#cosmicTSV = 'C:/Users/eelias13/PycharmProjects/KinaseModulation/CosmicFiles/COSMIC_UniProt_mapped_GenomeScreen_missense.tsv'
-cosmicTSV = ''
-cosmic_headCSV = '/home/eelias13/KinaseModulation/CosmicFiles/COSMIC_UniProt_mapped_GenomeScreen_missense-sample.csv'
-cosmic_phos_mutsCSV = '/home/eelias13/KinaseModulation/CosmicFiles/cosmic_variants.csv'
-cosmic_scoresCSV = 'CosmicFiles/cosmic_kinase_scores.csv'
-cosmic_all_psitesCSV = 'C:/Users/eelias13/PycharmProjects/KinaseModulation/CosmicFiles/cosmic_filtered_all_psites.csv'
-cosmic_percent_rankCSV = 'C:/Users/eelias13/PycharmProjects/KinaseModulation/CosmicFiles/cosmic_percent_rank.csv'
-#cosmic_four_samplesCSV = 'C:/Users/eelias13/PycharmProjects/KinaseModulation/CosmicFiles/cosmic_sample.csv'
-
-gtex_metaCSV = '/home/eelias13/KinaseModulation/gtexFiles/GTEX_metadata.csv'
-gtex_tpmTSV = '/home/eelias13/KinaseModulation/gtexFiles/GTEx_v1.1.9_Median_tpm_by_SMTS.tsv'
-tissues_mappedCSV = "/home/eelias13/KinaseModulation/gtexFiles/cosmic_tissue_types_mapped.csv"
-cosmic_tissuesCSV = '/home/eelias13/KinaseModulation/gtexFiles/cosmic_tissues.csv'
-tpm_filteredCSV = 'C/home/eelias13/KinaseModulation/gtexFiles/tpm_filtered.csv'
-sty_kinase_tpmCSV = '/home/eelias13/KinaseModulation/gtexFiles/sty_kinase_tpm_mapped.csv'
-cosmic_tpmCSV = '/home/eelias13/KinaseModulation/gtexFiles/cosmic_variant_tpm_mapped.csv'
-poiCSV = '/home/eelias13/KinaseModulation/gtexFiles/proteins_of_interest.csv'
-psite_tpmCSV = '/home/eelias13/KinaseModulation/gtexFiles/psite_tpm_mapped.csv'
-
-ser_thr_kinasesTSV = '/home/eelias13/KinaseModulation/kinaseFiles/mapped_ser_thr_kinases.tsv'
-tyr_kinasesTSV = '/home/eelias13/KinaseModulation/kinaseFiles/mapped_tyr_kinases.tsv'
-ser_thr_tyr_kinasesCSV = '/home/eelias13/KinaseModulation/kinaseFiles/mapped_ser_thr_tyr_kinases.csv'
-
-HT_psitesTSV = '/home/eelias13/KinaseModulation/final_phosphosites_mapped_to_canonical_proteome-merged.tsv'
 
 # data frame variables
 # proteome, kinase, and phosphosite dfs
 proteome = readCSV(proteomeCSV)
 final_phosphosites = readCSV(final_phosphositesCSV)
-#substrate_yaffe = readCSV(substrate_yaffeCSV)
-#substrate_psp = readCSV(substrate_pspCSV)
-all_psites_mapped_ensembl = readCSV(all_psites_mapped_ensemblCSV)
 
 # pssm df
 st_pssm = readCSV(pssmCSV)
 y_pssm = readCSV(tyrPSSMCSV)
-
-# cosmic dfs (unaltered)
-cosmic_full = readTSV(cosmicTSV)
-cosmic_head = readCSV(cosmic_headCSV) #tester df (first 1000 lines)
-
-# cosmic altered dfs
-cosmic_all_psites = readCSV(cosmic_all_psitesCSV)
-cosmic_phos_muts = readCSV(cosmic_phos_mutsCSV)
-cosmic_scores = readCSV(cosmic_scoresCSV)
-cosmic_percent_rank = readCSV(cosmic_percent_rankCSV)
-# cosmic_samples_dict = {
-#     "#Gene": ["SGO1", "GCSAML", "SRC", "NACA"],
-#     "UniProt_accession": ["Q5FBB7", "Q5JQS6", "P12931", "E9PAV3"],
-#     "UniProt_position": [448, 116, 439, 1413],
-#     "residue_WT": ["S", "S", "Y", "K"], 
-#     "residue_variant": ["F", "Y", "S", "Q"]
-# }
-# cosmic_samples = pd.DataFrame(cosmic_samples_dict)
-# PM_cosmic_sample = readCSV('PM_cosmic_sample.csv')
-# sample_cosmic_scores = readCSV('cosmic_sample_kinase_scores.csv')
-
-# phosphosites df
-proteome = readCSV(proteomeCSV)
-
-# tissues
-gtex_meta = readCSV(gtex_metaCSV)
-gtex_tpm = readTSV(gtex_tpmTSV)
-tissues_mapped = readCSV(tissues_mappedCSV)
-cosmic_tissues = readCSV(cosmic_tissuesCSV)
-tpm_filtered = readCSV(tpm_filteredCSV)
-sty_kinase_tpm = readCSV(sty_kinase_tpmCSV)
-cosmic_tpm = readCSV(cosmic_tpmCSV)
-poi = readCSV(poiCSV)
-psite_tpm = readCSV(psite_tpmCSV)
-
-# kinases mapped
-ser_thr_kinases = readTSV(ser_thr_kinasesTSV)
-tyr_kinases = readTSV(tyr_kinasesTSV)
-ser_thr_tyr_kinases = readCSV(ser_thr_tyr_kinasesCSV)
-
-# HT psites
-ht_psites = readTSV(HT_psitesTSV)
 
 # adjust data types and indices in df as needed
 # command example: df.col = df.col.astype('str')

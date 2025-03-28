@@ -1,5 +1,5 @@
 import Aim1
-import SubstratePhosphositeDictionary as spd
+import PhosphositeFeatures as spd
 import EvaluatePSSM as ep
 import EvaluateMut as em
 import pickle

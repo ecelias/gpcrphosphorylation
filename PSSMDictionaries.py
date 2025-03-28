@@ -25,6 +25,7 @@ def pssm_dict(df):
 #st_pssm_dictionary = pssm_dict(st_pssm)
 #pickle.dump(st_pssm_dictionary, open("pickle_st_pssm_dictionary.p", 'wb'))
 st_pssm_dict = pickle.load(open("pickle_st_pssm_dictionary.p", "rb"))
+print(st_pssm_dict)
 
 #y_pssm_dictionary = pssm_dict(y_pssm)
 #pickle.dump(y_pssm_dictionary, open("pickle_y_pssm_dictionary.p", 'wb'))

@@ -1,16 +1,17 @@
 import math
-
+import itertools
 import pandas as pd
 import Aim1
-import PSSMDictionaries as pd
 import pickle
 import operator
+
+from PhosphositeFeatures import all_mapped_psites
+from PSSMDictionaries import st_pssm_dict
+from PSSMDictionaries import y_pssm_dict
 
 
 st_pssm = Aim1.st_pssm
 y_pssm = Aim1.y_pssm
-st_pssm_dict = pd.st_pssm_dict
-y_pssm_dict = pd.y_pssm_dict
 
 
 # create a list of all kinases in pssm
@@ -40,7 +41,6 @@ def get_pssm_y(kinase, site, residue):
 def sort_dict(d):
     sorted_dict = dict(sorted(d.items(), key=operator.itemgetter(1), reverse=True))
     return sorted_dict
-
 
 # function that accepts a sequence (as a string) and returns a dictionary with k = kinase and v = log2(product) of all PSSMs
 # dictionary will be for all kinases in yaffe paper
@@ -99,16 +99,28 @@ def y_score_dict(sequence):
 
 
 # create a dictionary where each substrate sequence has a score for each kinase
-# k = [uniprot id,sequence] and v = all kinases and scores for that sequence
-def substrate_scores(dict):
+# k = uniprot id_sequence and v = all kinases and scores for that sequence
+def substrate_scores():
     substrate_scores = {}
-    for key in dict.keys():
-        current_seq = dict.get(key)
-        temp_dict = st_score_dict(current_seq)
+    for key in all_mapped_psites.keys():
+
+        current_key = key.split(",")
+        current_val = all_mapped_psites.get(key).split(",")
+
+        current_seq = current_val[0]
+        current_id = current_key[0]
+        current_psite = current_key[1]
+        current_psite_res = current_val[1]
+
+        if current_psite_res in {"T", "S"}:
+            temp_dict = st_score_dict(current_seq)
+        elif current_psite_res == "Y":
+            temp_dict = y_score_dict(current_seq)
+
         if temp_dict is not None:
-            uniprot_id = key[:key.index(',')]
-            k = str(uniprot_id) + ',' + str(current_seq)
+            k = str(current_id) + '_' + str(current_seq) + "_" + current_psite_res
             substrate_scores[k] = temp_dict
+    
     return substrate_scores
 
 
@@ -125,43 +137,6 @@ def to_df(dictionary):
     df.insert(1, 'SEQUENCE', col_two)
     pd.options.display.float_format = '{:.3f}'.format
     return df
-
-
-# create a dictionary to rank all the scores
-# argument should be a dictionary where k = (uniprot id,sequence) and v = dictionary of kinases and scores
-# key = (uniprot id, sequence) and value is a list of kinases from highest to lowest score
-def ranked_dict(d):
-    ranked_dict = {}
-    for key, value in d.items():
-        value = sort_dict(value)
-        kinases = list(value.keys())
-        kinase_rank_dict = {}
-        i = 1
-        while i < 304:
-            for kinase in kinases:
-                kinase_rank_dict[i] = kinase
-                i += 1
-        ranked_dict[key] = kinase_rank_dict
-    return ranked_dict
-
-
-# transform ranked dictionary into a dataframe
-def ranked_df(dict):
-    df = pd.DataFrame.from_dict(dict, orient='index')
-    df = df.reset_index()
-    df[['ACC_ID', 'SEQUENCE']] = df['index'].str.split(',', expand=True)
-    df = df.drop(['index'], axis=1)
-
-    col_one = df.pop('ACC_ID')
-    col_two = df.pop('SEQUENCE')
-    df.insert(0, 'ACC_ID', col_one)
-    df.insert(1, 'SEQUENCE', col_two)
-
-    return df
-
-
-
-#print(y_score_dict('EALKFYTDPS'))
 
 
 

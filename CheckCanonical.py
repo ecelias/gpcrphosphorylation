@@ -1,6 +1,6 @@
 import pandas as pd
 import Aim1
-import SubstratePhosphositeDictionary as spd
+import PhosphositeFeatures as spd
 import pickle
 import time
 

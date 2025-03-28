@@ -2,7 +2,7 @@ import pandas as pd
 import pickle
 import Aim1
 import CheckCanonical as cc
-import SubstratePhosphositeDictionary as spd
+import PhosphositeFeatures as spd
 
 all_mapped_dict = spd.all_mapped_psites
 FINAL_sites = cc.FINAL_sites
